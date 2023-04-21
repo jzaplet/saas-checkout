@@ -23,7 +23,7 @@ function App() {
   const [currentStep] = useAtom(step);
 
   return (
-    <div className="mx-auto w-[1130px] p-5 flex bg-white shadow-lg rounded-lg">
+    <div className="mx-auto w-[1130px] p-5 flex bg-white shadow-lg rounded-lg my-5">
       <div className="w-[275px] relative">
         <img src={SideBarDesktop} alt="Checkout BG" />
         <div className="absolute inset-0 p-8">
