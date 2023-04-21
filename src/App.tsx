@@ -1,14 +1,25 @@
+import PersonalInfo from './components/PersonalInfo';
+import SideBarDesktop from './../assets/images/bg-sidebar-desktop.svg';
+import Step from './components/stepper/Step';
+
 function App() {
-  //todo: feel free to delete following JSX and use this function as entrypoint to your app
   return (
-    <div className="bg-black h-screen flex items-center justify-center text-white">
-      <div className={'text-center relative'}>
-        <span className={'text-[62px]'}>
-          Argo
-          <span className={'pl-1 inline-block text-[#ffe014] animate-bounce'}>22</span>
-        </span>
-        <h1 className={'mt-2'}>Welcome to advanced Frontend challenge</h1>
-        <p className={'pt-4'}>See README.md for instructions</p>
+    <div className="mx-auto w-[1130px] p-5 flex bg-white shadow-lg rounded-lg">
+      <div className="w-[275px] relative">
+        <img src={SideBarDesktop} alt="Checkout BG" />
+        <div className="absolute inset-0 p-8">
+          <div className="flex flex-col gap-y-8">
+            <Step step={1} name="Your info" active={false} />
+            <Step step={2} name="Select plan" active={false} />
+            <Step step={3} name="Add-ons" active={true} />
+            <Step step={4} name="Summary" active={false} />
+          </div>
+        </div>
+      </div>
+      <div className="flex justify-center w-[855px]">
+        <div className="w-[545px]">
+          <PersonalInfo />
+        </div>
       </div>
     </div>
   );
