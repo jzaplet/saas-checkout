@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import Header from './section/Header';
 import NavButtons from './stepper/NavButtons';
 import TextInput from './forms/inputs/TextInput';
-import { personalData, step } from '../store/store';
+import { personalDataStore, stepStore } from '../store/store';
 
 type FormValues = {
   name: string;
@@ -21,8 +21,8 @@ const schema = yup.object({
 });
 
 function PersonalInfo(): JSX.Element {
-  const [, setStep] = useAtom(step);
-  const [pData, setPersonalData] = useAtom(personalData);
+  const [, setStep] = useAtom(stepStore);
+  const [pData, setPersonalData] = useAtom(personalDataStore);
 
   const {
     register,

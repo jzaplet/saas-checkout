@@ -1,10 +1,10 @@
 import { useAtom } from 'jotai';
-import { step } from '../store/store';
+import { stepStore } from '../store/store';
 import Header from './section/Header';
 import NavButtons from './stepper/NavButtons';
 
 function FinishingUp(): JSX.Element {
-  const [, setStep] = useAtom(step);
+  const [, setStep] = useAtom(stepStore);
 
   function onSubmit(): void {
     setStep(5);

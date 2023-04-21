@@ -4,11 +4,16 @@
  */
 
 import { atom } from 'jotai';
+import { Plan } from '../api/types';
 
-export const step = atom(1);
+export const stepStore = atom(1);
 
-export const personalData = atom({
+export const plansStore = atom<Plan[]>([]);
+
+export const personalDataStore = atom({
   name: '',
   email: '',
   phone: '',
 });
+
+export const selectedPlanStore = atom<Plan | null>(null);

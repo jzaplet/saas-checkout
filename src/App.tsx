@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAtom } from 'jotai';
-import { step } from './store/store';
+import { stepStore } from './store/store';
 import SideBarDesktop from './../assets/images/bg-sidebar-desktop.svg';
 import PersonalInfo from './components/PersonalInfo';
 import SelectPlan from './components/SelectPlan';
@@ -20,7 +20,7 @@ const components = {
 const stepNames: string[] = ['Your info', 'Select plan', 'Add-ons', 'Summary'];
 
 function App() {
-  const [currentStep] = useAtom(step);
+  const [currentStep] = useAtom(stepStore);
 
   return (
     <div className="mx-auto w-[1130px] p-5 flex bg-white shadow-lg rounded-lg my-5">
