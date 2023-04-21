@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { plansStore, selectedPlanStore, stepStore } from '../store/store';
 import Header from './section/Header';
