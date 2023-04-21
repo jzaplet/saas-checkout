@@ -3,20 +3,20 @@ import { step } from '../store/store';
 import Header from './section/Header';
 import NavButtons from './stepper/NavButtons';
 
-function SelectPlan(): JSX.Element {
+function FinishingUp(): JSX.Element {
   const [, setStep] = useAtom(step);
 
   function onSubmit(): void {
-    setStep(3);
+    setStep(5);
   }
 
   return (
     <form onSubmit={onSubmit} className="grid grid-cols-1 place-content-between h-full">
-      <Header title="Select your plan" description="You have the option of monthly or yearly billng." />
+      <Header title="Finishing Up" description="Double check everything looks OK before confirming." />
       <div>...</div>
-      <NavButtons btnText="Next step" />
+      <NavButtons btnText="Confirm" />
     </form>
   );
 }
 
-export default SelectPlan;
+export default FinishingUp;

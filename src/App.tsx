@@ -1,10 +1,13 @@
 import React from 'react';
+import { useAtom } from 'jotai';
+import { step } from './store/store';
 import SideBarDesktop from './../assets/images/bg-sidebar-desktop.svg';
 import PersonalInfo from './components/PersonalInfo';
 import SelectPlan from './components/SelectPlan';
+import PickAddons from './components/PickAddons';
+import FinishingUp from './components/FinishingUp';
 import Step from './components/stepper/Step';
-import { step } from './store/store';
-import { useAtom } from 'jotai';
+import ThankYou from './components/ThankYou';
 
 function App() {
   const [currentStep] = useAtom(step);
@@ -13,6 +16,9 @@ function App() {
   const components = {
     1: PersonalInfo,
     2: SelectPlan,
+    3: PickAddons,
+    4: FinishingUp,
+    5: ThankYou,
   };
 
   return (
@@ -22,7 +28,7 @@ function App() {
         <div className="absolute inset-0 p-8">
           <div className="flex flex-col gap-y-8">
             {steps.map((step, i) => (
-              <Step step={i + 1} name={step} active={i === currentStep - 1} key={i} />
+              <Step step={i + 1} name={step} active={i === currentStep - 1 || (currentStep === 5 && i === 3)} key={i} />
             ))}
           </div>
         </div>
