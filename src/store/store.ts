@@ -4,7 +4,7 @@
  */
 
 import { atom } from 'jotai';
-import { Plan } from '../api/types';
+import { Billing, Plan } from '../api/types';
 
 export const stepStore = atom(1);
 
@@ -17,3 +17,5 @@ export const personalDataStore = atom({
 });
 
 export const selectedPlanStore = atom<Plan | null>(null);
+
+export const selectedBillingIntervalStore = atom<Billing>(Billing.month);

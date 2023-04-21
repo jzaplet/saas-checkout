@@ -52,34 +52,47 @@ function SelectPlan(): JSX.Element {
   return (
     <form onSubmit={onSubmit} className="grid grid-cols-1 place-content-between h-full">
       <Header title="Select your plan" description="You have the option of monthly or yearly billng." />
-      <div className="grid grid-cols-3 gap-4">
-        {plans.length < 1 && <span>Loading...</span>}
-        {plans?.map((plan) => (
-          <div
-            key={plan.id}
-            onClick={() => setSelectedPlan(plan)}
-            className={[
-              'border border-light-gray',
-              'rounded-md',
-              'p-4',
-              'min-h-[200px]',
-              'grid',
-              'content-between',
-              'cursor-pointer',
-              'transition-colors duration-300 ease-in-out',
-              'hover:border-purplish-blue hover:bg-alabaster',
-              selectedPlan?.id === plan.id ? 'border-purplish-blue bg-alabaster' : '',
-            ].join(' ')}
-          >
-            <div>
-              <img src={getPlanImage(plan.id)} alt={plan.name} />
+      <div>
+        <div className="grid grid-cols-3 gap-4">
+          {plans.length < 1 && <span>Loading...</span>}
+          {plans?.map((plan) => (
+            <div
+              key={plan.id}
+              onClick={() => setSelectedPlan(plan)}
+              className={[
+                'border border-light-gray',
+                'rounded-md',
+                'p-4',
+                'min-h-[200px]',
+                'grid',
+                'content-between',
+                'cursor-pointer',
+                'transition-colors duration-300 ease-in-out',
+                'hover:border-purplish-blue hover:bg-alabaster',
+                selectedPlan?.id === plan.id ? 'border-purplish-blue bg-alabaster' : '',
+              ].join(' ')}
+            >
+              <div>
+                <img src={getPlanImage(plan.id)} alt={plan.name} />
+              </div>
+              <div>
+                <div className="font-bold">{plan.name}</div>
+                <div className="text-sm text-cool-gray">${plan.monthlyFee}/mo</div>
+              </div>
             </div>
-            <div>
-              <div className="font-bold">{plan.name}</div>
-              <div className="text-sm text-cool-gray">${plan.monthlyFee}/mo</div>
+          ))}
+        </div>
+        {plans.length !== 0 && (
+          <div className="mt-5 opacity-10">
+            <div className="bg-alabaster rounded-md p-3 flex gap-5 justify-center">
+              <div className="font-bold">Monthly</div>
+              <div className="rounded-full p-1 bg-marine-blue w-[50px] cursor-pointer flex justify-start">
+                <div className="rounded-full bg-white w-[1.125rem] h-[1.125rem]"></div>
+              </div>
+              <div className="font-bold text-cool-gray">Yearly</div>
             </div>
           </div>
-        ))}
+        )}
       </div>
       <NavButtons btnText="Next step" disabled={plans.length < 1 || !selectedPlan} />
     </form>
