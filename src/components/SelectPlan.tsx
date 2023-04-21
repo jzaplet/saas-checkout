@@ -13,14 +13,14 @@ function SelectPlan(): JSX.Element {
   const [plans, setPlans] = useAtom(plansStore);
   const [selectedPlan, setSelectedPlan] = useAtom(selectedPlanStore);
 
-  function getPlanImage(planName: string): string {
+  function getPlanImage(id: string): string {
     const imageMap = [
-      { name: 'Arcade', image: ImgArcade },
-      { name: 'Advanced', image: ImgAdvanced },
-      { name: 'Pro', image: ImgPro },
+      { id: 'plan-1', image: ImgArcade },
+      { id: 'plan-2', image: ImgAdvanced },
+      { id: 'plan-3', image: ImgPro },
     ];
 
-    const image = imageMap.find((v) => v.name === planName);
+    const image = imageMap.find((v) => v.id === id);
 
     return image ? image.image : '//dummyimage.com/40x40';
   }
@@ -72,7 +72,7 @@ function SelectPlan(): JSX.Element {
             ].join(' ')}
           >
             <div>
-              <img src={getPlanImage(plan.name)} alt={plan.name} />
+              <img src={getPlanImage(plan.id)} alt={plan.name} />
             </div>
             <div>
               <div className="font-bold">{plan.name}</div>
