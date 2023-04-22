@@ -62,7 +62,7 @@ function SelectPlan(): JSX.Element {
   return (
     <form onSubmit={onSubmit} className="grid grid-cols-1 place-content-between h-full">
       <Header title="Select your plan" description="You have the option of monthly or yearly billng." />
-      <div>
+      <div className="mt-5 xl:mt-0">
         {plans.length < 1 && (
           <div className="flex justify-center py-5">
             <Spinner />

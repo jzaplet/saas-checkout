@@ -38,7 +38,7 @@ function PersonalInfo(): JSX.Element {
   return (
     <form onSubmit={onSubmit} className="grid grid-cols-1 place-content-between h-full">
       <Header title="Personal info" description="Please provide your name, email address, and phone number." />
-      <div>
+      <div className="grid gap-5 mt-5 xl:mt-0">
         <TextInput label="Name" fieldName="name" error={errors.name} register={register} />
         <TextInput label="E-mail Address" fieldName="email" error={errors.email} register={register} />
         <TextInput

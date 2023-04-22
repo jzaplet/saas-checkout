@@ -10,7 +10,7 @@ type Props = {
 
 function TextInput(props: Props): JSX.Element {
   return (
-    <div className="mb-5">
+    <div>
       <div className="flex place-content-between text-cool-gray font-sm mb-1">
         <label htmlFor="name">{props.label}</label>
         {props.error && <span className="text-strawberry-red font-bold">{props.error.message}</span>}
