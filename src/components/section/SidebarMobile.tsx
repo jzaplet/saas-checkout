@@ -9,14 +9,9 @@ function SidebarMobile() {
   const [currentStep] = useAtom(stepStore);
   return (
     <div className="relative xl:hidden">
-      <img
-        src={ImgSideBarMobile}
-        alt="Checkout BG"
-        className="absolute w-full max-w-[375px]"
-        width={375}
-        height={172}
-        style={{ zIndex: -1 }}
-      />
+      <div className="absolute w-full" style={{ zIndex: -1 }}>
+        <img src={ImgSideBarMobile} alt="Checkout BG" className="mx-auto max-w-[375px]" width={375} height={172} />
+      </div>
       <div className="flex justify-center gap-2 py-5">
         {stepViews.slice(0, 4).map((step, i) => (
           <StepCircle num={i + 1} active={i === currentStep - 1 || (i == 3 && currentStep === 5)} key={step.num} />

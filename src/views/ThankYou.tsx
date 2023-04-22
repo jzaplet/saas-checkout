@@ -3,7 +3,7 @@ import ImgThankYou from '../../assets/images/icon-thank-you.svg';
 function ThankYou(): JSX.Element {
   return (
     <form className="grid grid-cols-1 place-content-center text-center h-full">
-      <div className="flex flex-col items-center justify-center text-center">
+      <div className="flex flex-col items-center justify-center text-center py-10">
         <div className="text-center">
           <img src={ImgThankYou} alt="Thank you" width={80} height={80} />
         </div>
