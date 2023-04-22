@@ -2,11 +2,11 @@ import React from 'react';
 import { useAtom } from 'jotai';
 import { stepStore } from './store/store';
 import SideBarDesktop from './../assets/images/bg-sidebar-desktop.svg';
-import PersonalInfo from './components/PersonalInfo';
-import SelectPlan from './components/SelectPlan';
-import PickAddons from './components/PickAddons';
-import FinishingUp from './components/FinishingUp';
-import ThankYou from './components/ThankYou';
+import PersonalInfo from './views/PersonalInfo';
+import SelectPlan from './views/SelectPlan';
+import PickAddons from './views/PickAddons';
+import FinishingUp from './views/FinishingUp';
+import ThankYou from './views/ThankYou';
 import Step from './components/stepper/Step';
 
 const components = {
