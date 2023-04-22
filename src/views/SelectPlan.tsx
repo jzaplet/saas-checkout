@@ -88,7 +88,7 @@ function SelectPlan(): JSX.Element {
               ].join(' ')}
             >
               <div className="pr-4">
-                <img src={getPlanImage(plan.id)} alt={plan.name} />
+                <img src={getPlanImage(plan.id)} alt={plan.name} width={40} height={40} />
               </div>
               <div>
                 <div className="font-bold text-marine-blue">{plan.name}</div>

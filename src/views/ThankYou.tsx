@@ -5,7 +5,7 @@ function ThankYou(): JSX.Element {
     <form className="grid grid-cols-1 place-content-center text-center h-full">
       <div className="flex flex-col items-center justify-center text-center">
         <div className="text-center">
-          <img src={ImgThankYou} alt="Thank you" />
+          <img src={ImgThankYou} alt="Thank you" width={80} height={80} />
         </div>
         <h1 className="text-3xl font-bold py-4 text-marine-blue">Thank you!</h1>
         <p className="text-lg text-cool-gray max-w-[500px]">
