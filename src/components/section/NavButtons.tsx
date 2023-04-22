@@ -14,7 +14,7 @@ function NavButtons(props: Props): JSX.Element {
   }
 
   return (
-    <div className="flex place-content-between mb-4 w-full">
+    <div className="flex place-content-between mt-5 xl:mt-0 xl:mb-4 w-full">
       {currentStep > 1 ? (
         <button type="button" onClick={stepBack} className="text-cool-gray">
           Go Back

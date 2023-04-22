@@ -1,5 +1,7 @@
+import StepCircle from './StepCircle';
+
 type Props = {
-  step: number;
+  num: number;
   name: string;
   active: boolean;
 };
@@ -7,16 +9,9 @@ type Props = {
 function Step(props: Props): JSX.Element {
   return (
     <div className="flex items-center gap-3">
-      <div
-        className={`
-        w-10 h-10 rounded-full border flex items-center justify-center font-bold 
-        ${props.active ? 'text-marine-blue bg-light-blue border-pastel-blue' : 'text-white border-white'}
-      `}
-      >
-        {props.step}
-      </div>
+      <StepCircle num={props.num} active={props.active} />
       <div className="text-white uppercase">
-        <div className="text-light-gray text-sm">Step {props.step}</div>
+        <div className="text-light-gray text-sm">Step {props.num}</div>
         <div className="font-bold">{props.name}</div>
       </div>
     </div>

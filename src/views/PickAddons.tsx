@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { stepStore } from '../store/store';
 import Header from '../components/section/Header';
-import NavButtons from '../components/stepper/NavButtons';
+import NavButtons from '../components/section/NavButtons';
 
 function PickAddons(): JSX.Element {
   const [, setStep] = useAtom(stepStore);

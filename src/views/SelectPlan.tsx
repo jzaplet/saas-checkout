@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 import { plansStore, selectedBillingIntervalStore, selectedPlanStore, stepStore } from '../store/store';
 import { Billing, Plan } from '../api/types';
 import Header from '../components/section/Header';
-import NavButtons from '../components/stepper/NavButtons';
+import NavButtons from '../components/section/NavButtons';
 import Spinner from '../components/icons/Spinner';
 import ImgArcade from '../../assets/images/icon-arcade.svg';
 import ImgAdvanced from '../../assets/images/icon-advanced.svg';
@@ -64,12 +64,12 @@ function SelectPlan(): JSX.Element {
       <Header title="Select your plan" description="You have the option of monthly or yearly billng." />
       <div>
         {plans.length < 1 && (
-          <div className="flex justify-center">
+          <div className="flex justify-center py-5">
             <Spinner />
           </div>
         )}
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid xl:grid-cols-3 gap-4">
           {plans?.map((plan) => (
             <div
               key={plan.id}
@@ -78,8 +78,8 @@ function SelectPlan(): JSX.Element {
                 'border border-light-gray',
                 'rounded-md',
                 'p-4',
-                'min-h-[200px]',
-                'grid',
+                'xl:min-h-[200px]',
+                'flex xl:grid',
                 'content-between',
                 'cursor-pointer',
                 'transition-colors duration-300 ease-in-out',
@@ -87,13 +87,15 @@ function SelectPlan(): JSX.Element {
                 selectedPlan?.id === plan.id ? 'border-purplish-blue bg-alabaster' : '',
               ].join(' ')}
             >
-              <div>
+              <div className="pr-4">
                 <img src={getPlanImage(plan.id)} alt={plan.name} />
               </div>
               <div>
                 <div className="font-bold text-marine-blue">{plan.name}</div>
                 <div className="text-cool-gray">
-                  <div className="leading-7">${monthlySubs() ? plan.monthlyFee + '/mo' : plan.yearlyFee + '/yr'}</div>
+                  <div className="xl:leading-7">
+                    ${monthlySubs() ? plan.monthlyFee + '/mo' : plan.yearlyFee + '/yr'}
+                  </div>
                   {!monthlySubs() && <div className="text-sm text-marine-blue">2 months free</div>}
                 </div>
               </div>

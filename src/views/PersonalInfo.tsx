@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Header from '../components/section/Header';
-import NavButtons from '../components/stepper/NavButtons';
+import NavButtons from '../components/section/NavButtons';
 import TextInput from '../components/forms/inputs/TextInput';
 import { personalDataStore, stepStore } from '../store/store';
 
