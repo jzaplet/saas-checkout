@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { plansStore, selectedBillingIntervalStore, selectedPlanStore, stepStore } from '../store/store';
+import { Billing, Plan } from '../api/types';
 import Header from './section/Header';
 import NavButtons from './stepper/NavButtons';
-import { Billing, Plan } from '../api/types';
+import Spinner from './icons/Spinner';
 import ImgArcade from '../../assets/images/icon-arcade.svg';
 import ImgAdvanced from '../../assets/images/icon-advanced.svg';
 import ImgPro from '../../assets/images/icon-pro.svg';
@@ -62,8 +63,13 @@ function SelectPlan(): JSX.Element {
     <form onSubmit={onSubmit} className="grid grid-cols-1 place-content-between h-full">
       <Header title="Select your plan" description="You have the option of monthly or yearly billng." />
       <div>
+        {plans.length < 1 && (
+          <div className="flex justify-center">
+            <Spinner />
+          </div>
+        )}
+
         <div className="grid grid-cols-3 gap-4">
-          {plans.length < 1 && <span>Loading...</span>}
           {plans?.map((plan) => (
             <div
               key={plan.id}
