@@ -9,38 +9,42 @@ import FinishingUp from './views/FinishingUp';
 import ThankYou from './views/ThankYou';
 import Step from './components/stepper/Step';
 
-const components = {
-  1: PersonalInfo,
-  2: SelectPlan,
-  3: PickAddons,
-  4: FinishingUp,
-  5: ThankYou,
-};
-
-const stepNames: string[] = ['Your info', 'Select plan', 'Add-ons', 'Summary'];
+const steps = [
+  { num: 1, name: 'Your info', component: PersonalInfo },
+  { num: 2, name: 'Select plan', component: SelectPlan },
+  { num: 3, name: 'Add-ons', component: PickAddons },
+  { num: 4, name: 'Summary', component: FinishingUp },
+  { num: 5, name: 'Thank you', component: ThankYou },
+];
 
 function App() {
   const [currentStep] = useAtom(stepStore);
 
+  function createStepComponent(): JSX.Element {
+    const component = steps.find((s) => s.num === currentStep)?.component;
+    return component ? React.createElement(component) : <></>;
+  }
+
   return (
-    <div className="mx-auto w-[1130px] p-5 flex bg-white shadow-lg rounded-lg my-5">
-      <div className="w-[275px] relative">
+    <div className="mx-auto xl:w-[1130px] p-5 xl:flex bg-white shadow-lg rounded-lg my-5">
+      <div className="xl:w-[275px] relative">
         <img src={SideBarDesktop} alt="Checkout BG" />
         <div className="absolute inset-0 p-8">
           <div className="flex flex-col gap-y-8">
-            {stepNames.map((step, i) => (
-              <Step step={i + 1} name={step} active={i === currentStep - 1 || (currentStep === 5 && i === 3)} key={i} />
+            {steps.slice(0, 4).map((step, i) => (
+              <Step
+                step={i + 1}
+                name={step.name}
+                active={i === currentStep - 1 || (i == 3 && currentStep === 5)}
+                key={step.num}
+              />
             ))}
           </div>
         </div>
       </div>
-      <div className="flex justify-center w-[855px]">
-        <div className="w-[545px]">
-          {
-            // @ts-ignore // TODO: Fix this
-            React.createElement(components[currentStep])
-          }
-        </div>
+
+      <div className="flex justify-center xl:w-[855px]">
+        <div className="xl:w-[545px]">{createStepComponent()}</div>
       </div>
     </div>
   );
