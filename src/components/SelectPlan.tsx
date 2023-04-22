@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { plansStore, selectedPlanStore, stepStore } from '../store/store';
+import { plansStore, selectedBillingIntervalStore, selectedPlanStore, stepStore } from '../store/store';
 import Header from './section/Header';
 import NavButtons from './stepper/NavButtons';
-import { Plan } from '../api/types';
+import { Billing, Plan } from '../api/types';
 import ImgArcade from '../../assets/images/icon-arcade.svg';
 import ImgAdvanced from '../../assets/images/icon-advanced.svg';
 import ImgPro from '../../assets/images/icon-pro.svg';
@@ -12,18 +12,7 @@ function SelectPlan(): JSX.Element {
   const [, setStep] = useAtom(stepStore);
   const [plans, setPlans] = useAtom(plansStore);
   const [selectedPlan, setSelectedPlan] = useAtom(selectedPlanStore);
-
-  function getPlanImage(id: string): string {
-    const imageMap = [
-      { id: 'plan-1', image: ImgArcade },
-      { id: 'plan-2', image: ImgAdvanced },
-      { id: 'plan-3', image: ImgPro },
-    ];
-
-    const image = imageMap.find((v) => v.id === id);
-
-    return image ? image.image : '//dummyimage.com/40x40';
-  }
+  const [selectedBillingInterval, setSelectedBillingInterval] = useAtom(selectedBillingIntervalStore);
 
   async function fetchPlans(): Promise<void> {
     // TODO: Implement GraphQL query... ????
@@ -43,6 +32,26 @@ function SelectPlan(): JSX.Element {
 
   function onSubmit(): void {
     setStep(3);
+  }
+
+  function getPlanImage(id: string): string {
+    const imageMap = [
+      { id: 'plan-1', image: ImgArcade },
+      { id: 'plan-2', image: ImgAdvanced },
+      { id: 'plan-3', image: ImgPro },
+    ];
+
+    const image = imageMap.find((v) => v.id === id);
+
+    return image ? image.image : '//dummyimage.com/40x40';
+  }
+
+  function toggleBillingInterval(): void {
+    setSelectedBillingInterval(monthlySubs() ? Billing.year : Billing.month);
+  }
+
+  function monthlySubs(): boolean {
+    return selectedBillingInterval === Billing.month;
   }
 
   useEffect(() => {
@@ -76,24 +85,39 @@ function SelectPlan(): JSX.Element {
                 <img src={getPlanImage(plan.id)} alt={plan.name} />
               </div>
               <div>
-                <div className="font-bold">{plan.name}</div>
-                <div className="text-sm text-cool-gray">${plan.monthlyFee}/mo</div>
+                <div className="font-bold text-marine-blue">{plan.name}</div>
+                <div className="text-cool-gray">
+                  <div className="leading-7">${monthlySubs() ? plan.monthlyFee + '/mo' : plan.yearlyFee + '/yr'}</div>
+                  {!monthlySubs() && <div className="text-sm text-marine-blue">2 months free</div>}
+                </div>
               </div>
             </div>
           ))}
         </div>
+
         {plans.length !== 0 && (
-          <div className="mt-5 opacity-10">
-            <div className="bg-alabaster rounded-md p-3 flex gap-5 justify-center">
-              <div className="font-bold">Monthly</div>
-              <div className="rounded-full p-1 bg-marine-blue w-[50px] cursor-pointer flex justify-start">
+          <div className="mt-5">
+            <div className="bg-alabaster rounded-md p-3 flex gap-5 justify-center text-cool-gray">
+              <div className={`font-bold ${selectedBillingInterval === Billing.month ? 'text-marine-blue' : ''}`}>
+                Monthly
+              </div>
+              <div
+                onClick={toggleBillingInterval}
+                className={[
+                  'rounded-full p-1 bg-marine-blue w-[50px] cursor-pointer flex',
+                  selectedBillingInterval === Billing.month ? 'justify-start' : 'justify-end',
+                ].join(' ')}
+              >
                 <div className="rounded-full bg-white w-[1.125rem] h-[1.125rem]"></div>
               </div>
-              <div className="font-bold text-cool-gray">Yearly</div>
+              <div className={`font-bold ${selectedBillingInterval === Billing.year ? 'text-marine-blue' : ''}`}>
+                Yearly
+              </div>
             </div>
           </div>
         )}
       </div>
+
       <NavButtons btnText="Next step" disabled={plans.length < 1 || !selectedPlan} />
     </form>
   );
