@@ -17,7 +17,7 @@ function App(): JSX.Element {
     <>
       <SidebarMobile />
       <div className="mx-auto max-w-[375px] xl:max-w-[1130px] p-5 pt-0">
-        <div className="xl:flex bg-white shadow-lg rounded-lg p-5">
+        <div className="xl:flex bg-white shadow-lg rounded-lg p-5 mb-20 xl:mb-0">
           <SidebarDesktop />
           <div className="flex justify-center xl:w-[855px]">
             <div className="xl:w-[545px]">{createView()}</div>

@@ -106,21 +106,17 @@ function SelectPlan(): JSX.Element {
         {plans.length !== 0 && (
           <div className="mt-5">
             <div className="bg-alabaster rounded-md p-3 flex gap-5 justify-center text-cool-gray">
-              <div className={`font-bold ${selectedBillingInterval === Billing.month ? 'text-marine-blue' : ''}`}>
-                Monthly
-              </div>
+              <div className={`font-bold ${monthlySubs() ? 'text-marine-blue' : ''}`}>Monthly</div>
               <div
                 onClick={toggleBillingInterval}
                 className={[
                   'rounded-full p-1 bg-marine-blue w-[50px] cursor-pointer flex',
-                  selectedBillingInterval === Billing.month ? 'justify-start' : 'justify-end',
+                  monthlySubs() ? 'justify-start' : 'justify-end',
                 ].join(' ')}
               >
                 <div className="rounded-full bg-white w-[1.125rem] h-[1.125rem]"></div>
               </div>
-              <div className={`font-bold ${selectedBillingInterval === Billing.year ? 'text-marine-blue' : ''}`}>
-                Yearly
-              </div>
+              <div className={`font-bold ${!monthlySubs() ? 'text-marine-blue' : ''}`}>Yearly</div>
             </div>
           </div>
         )}
