@@ -65,7 +65,7 @@ function FinishingUp(): JSX.Element {
             {addons?.length > 0 && (
               <div className="mt-4 border-t border-magnolia">
                 {addons.map((addon) => (
-                  <div className="flex justify-between text-cool-gray mt-4">
+                  <div key={addon.id} className="flex justify-between text-cool-gray mt-4">
                     <div>{addon.name}</div>
                     <div className="text-marine-blue">
                       ${isMonthlyBilling() ? addon?.monthlyFee + '/mo' : addon?.yearlyFee + '/yr'}
