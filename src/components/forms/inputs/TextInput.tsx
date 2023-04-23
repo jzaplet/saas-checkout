@@ -12,14 +12,14 @@ function TextInput(props: Props): JSX.Element {
   return (
     <div>
       <div className="flex place-content-between text-cool-gray font-sm mb-1">
-        <label htmlFor="name">{props.label}</label>
+        <label htmlFor={props.fieldName}>{props.label}</label>
         {props.error && <span className="text-strawberry-red font-bold">{props.error.message}</span>}
       </div>
       <input
         {...props.register(props.fieldName)}
         placeholder={props.placeholder}
+        id={props.fieldName}
         type="text"
-        id="name"
         className={[
           'p-3',
           'w-full',

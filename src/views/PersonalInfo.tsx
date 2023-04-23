@@ -16,8 +16,19 @@ type FormValues = {
 // Todo: regex for email & phone
 const schema = yup.object({
   name: yup.string().required('Name is required'),
-  email: yup.string().email('Email is not valid').required('Email is required'),
-  phone: yup.string().required('Phone is required'),
+  email: yup
+    .string()
+    .required('Email is required')
+    .test((value, context) => {
+      return /^\S+@\S+\.\S+$/.test(value) || context.createError({ message: 'E-mail is not valid' });
+    }),
+  phone: yup
+    .string()
+    .required('Phone is required')
+    .test((value, context) => {
+      return /^(\+?420)?(\d?){9}$/.test(value) || context.createError({ message: 'Phone is not valid' });
+    })
+    .transform((value) => (value ? value.replace(/\s/g, '') : value)),
 });
 
 function PersonalInfo(): JSX.Element {
@@ -44,7 +55,7 @@ function PersonalInfo(): JSX.Element {
         <TextInput
           label="Phone Number"
           fieldName="phone"
-          placeholder="e.g. +1 234 567 890"
+          placeholder="e.g. +420 123 456 789"
           error={errors.phone}
           register={register}
         />
