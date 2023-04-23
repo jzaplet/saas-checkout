@@ -56,8 +56,14 @@ export const useApi = () => {
     ];
   }
 
+  async function storeSubscription(): Promise<void> {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // TODO: implement GraphQL mutation
+  }
+
   return {
     fetchPlans,
     fetchAddons,
+    storeSubscription,
   };
 };

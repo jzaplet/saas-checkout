@@ -1,18 +1,32 @@
+import { FormEvent, useState } from 'react';
 import { useAtom } from 'jotai';
+import { useApi } from '../hooks/useApi';
+import { useMonthlyBilling } from '../hooks/useMonthlyBilling';
 import { selectedAddonsStore, selectedPlanStore, stepStore } from '../store/store';
 import Header from '../components/section/Header';
 import NavButtons from '../components/section/NavButtons';
-import { useMonthlyBilling } from '../hooks/useMonthlyBilling';
 
 function FinishingUp(): JSX.Element {
+  const { storeSubscription } = useApi();
   const { isMonthlyBilling } = useMonthlyBilling();
+  const [loading, setLoading] = useState(false);
+
   const [, setStep] = useAtom(stepStore);
   const [plan] = useAtom(selectedPlanStore);
   const [addons] = useAtom(selectedAddonsStore);
 
-  function onSubmit(): void {
-    // TODO: GraphQL mutation to create a new subscription
-    setStep(5);
+  async function onSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      await storeSubscription();
+      setStep(5);
+    } catch (e) {
+      console.error(e);
+    }
+
+    setLoading(false);
   }
 
   function sumPrice(): number {
@@ -70,7 +84,7 @@ function FinishingUp(): JSX.Element {
           </div>
         </div>
       </div>
-      <NavButtons btnText="Confirm" />
+      <NavButtons btnText="Confirm" loading={loading} />
     </form>
   );
 }
