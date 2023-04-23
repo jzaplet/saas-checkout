@@ -4,7 +4,7 @@ import PickAddons from '../views/PickAddons';
 import FinishingUp from '../views/FinishingUp';
 import ThankYou from '../views/ThankYou';
 
-export const stepViews = [
+export const router = [
   { num: 1, name: 'Your info', component: PersonalInfo },
   { num: 2, name: 'Select plan', component: SelectPlan },
   { num: 3, name: 'Add-ons', component: PickAddons },

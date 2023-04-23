@@ -2,7 +2,7 @@ import React from 'react';
 import Step from '../stepper/Step';
 import { useAtom } from 'jotai';
 import { stepStore } from '../../store/store';
-import { stepViews } from '../../store/stepViews';
+import { router } from '../../router/router';
 import ImgSideBarDesktop from '../../../assets/images/bg-sidebar-desktop.svg';
 
 function SidebarDesktop() {
@@ -12,7 +12,7 @@ function SidebarDesktop() {
       <img src={ImgSideBarDesktop} alt="Checkout BG" width={247} height={568} />
       <div className="absolute inset-0 p-8">
         <div className="flex flex-col gap-y-8">
-          {stepViews.slice(0, 4).map((step, i) => (
+          {router.slice(0, 4).map((step, i) => (
             <Step
               num={i + 1}
               name={step.name}

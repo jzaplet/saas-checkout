@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAtom } from 'jotai';
 import { stepStore } from './store/store';
-import { stepViews } from './store/stepViews';
+import { router } from './router/router';
 import SidebarDesktop from './components/section/SidebarDesktop';
 import SidebarMobile from './components/section/SidebarMobile';
 
@@ -9,7 +9,7 @@ function App(): JSX.Element {
   const [currentStep] = useAtom(stepStore);
 
   function createView(): JSX.Element {
-    const component = stepViews.find((s) => s.num === currentStep)?.component;
+    const component = router.find((s) => s.num === currentStep)?.component;
     return component ? React.createElement(component) : <></>;
   }
 
