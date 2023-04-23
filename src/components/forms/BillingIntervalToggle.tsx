@@ -1,4 +1,4 @@
-import { useMonthlyBilling } from '../hooks/useMonthlyBilling';
+import { useMonthlyBilling } from '../../hooks/useMonthlyBilling';
 
 function BillingIntervalToggle(): JSX.Element {
   const { switchBillingInterval, isMonthlyBilling } = useMonthlyBilling();

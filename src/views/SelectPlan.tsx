@@ -1,36 +1,27 @@
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
+import { useApi } from '../hooks/useApi';
 import { plansStore, selectedPlanStore, stepStore } from '../store/store';
-import { Plan } from '../api/types';
 import Header from '../components/section/Header';
 import NavButtons from '../components/section/NavButtons';
 import Spinner from '../components/icons/Spinner';
-import AddonSelect from '../components/forms/AddonSelect';
+import PlanSelect from '../components/forms/PlanSelect';
 import BillingIntervalToggle from '../components/forms/BillingIntervalToggle';
 
 function SelectPlan(): JSX.Element {
+  const { fetchPlans } = useApi();
+
   const [, setStep] = useAtom(stepStore);
   const [plans, setPlans] = useAtom(plansStore);
   const [selectedPlan, setSelectedPlan] = useAtom(selectedPlanStore);
 
-  async function fetchPlans(): Promise<void> {
-    // TODO: Implement GraphQL query... ????
-    // const resp = await fetch('http://localhost:5173/plans', { method: 'GET' });
-    // return await resp.json();
-    // //const { data } = useQuery({ queryKey: ['groups'], queryFn: fetchGroups })
-
-    // Simulate a delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    setPlans([
-      { __typename: 'Plan', id: 'plan-1', name: 'Arcade', monthlyFee: 9, yearlyFee: 90 },
-      { __typename: 'Plan', id: 'plan-2', name: 'Advanced', monthlyFee: 12, yearlyFee: 120 },
-      { __typename: 'Plan', id: 'plan-3', name: 'Pro', monthlyFee: 15, yearlyFee: 150 },
-    ]);
+  async function load(): Promise<void> {
+    const data = await fetchPlans();
+    setPlans(data);
   }
 
   useEffect(() => {
-    fetchPlans();
+    load();
   }, [plans]);
 
   return (
@@ -45,7 +36,7 @@ function SelectPlan(): JSX.Element {
 
         <div className="grid xl:grid-cols-3 gap-4">
           {plans?.map((plan) => (
-            <AddonSelect
+            <PlanSelect
               key={plan.id}
               plan={plan}
               isSelected={selectedPlan?.id === plan.id}

@@ -4,11 +4,13 @@
  */
 
 import { atom } from 'jotai';
-import { Billing, Plan } from '../api/types';
+import { Addon, Billing, Plan } from '../api/types';
 
 export const stepStore = atom(1);
 
 export const plansStore = atom<Plan[]>([]);
+
+export const addonsStore = atom<Addon[]>([]);
 
 export const personalDataStore = atom({
   name: '',
@@ -19,3 +21,5 @@ export const personalDataStore = atom({
 export const selectedPlanStore = atom<Plan | null>(null);
 
 export const selectedBillingIntervalStore = atom<Billing>(Billing.month);
+
+export const selectedAddonsStore = atom<Addon[]>([]);
