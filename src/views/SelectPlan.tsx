@@ -1,11 +1,11 @@
 import { useAtom } from 'jotai';
+import { plansQuery, queryRequest, useApi } from '../hooks/useApi';
+import { plansStore, selectedPlanStore, stepStore } from '../store/store';
 import Header from '../components/section/Header';
 import NavButtons from '../components/section/NavButtons';
 import Spinner from '../components/icons/Spinner';
 import PlanSelect from '../components/forms/PlanSelect';
 import BillingIntervalToggle from '../components/forms/BillingIntervalToggle';
-import { plansQuery, queryRequest, useApi } from '../hooks/useApi';
-import { plansStore, selectedPlanStore, stepStore } from '../store/store';
 
 function SelectPlan(): JSX.Element {
   const { useQuery } = useApi();

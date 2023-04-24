@@ -1,10 +1,10 @@
 import { FormEvent, useState } from 'react';
 import { useAtom } from 'jotai';
 import { useMonthlyBilling } from '../hooks/useMonthlyBilling';
-import Header from '../components/section/Header';
-import NavButtons from '../components/section/NavButtons';
 import { Mutation, MutationSubscribeArgs } from '../api/types';
 import { mutationRequest, subscribeMutation, useApi } from '../hooks/useApi';
+import Header from '../components/section/Header';
+import NavButtons from '../components/section/NavButtons';
 
 import {
   personalDataStore,
@@ -16,11 +16,11 @@ import {
 
 function FinishingUp(): JSX.Element {
   const { useMutation } = useApi();
-
   const { isMonthlyBilling } = useMonthlyBilling();
-  const [loading, setLoading] = useState(false);
 
+  const [loading, setLoading] = useState(false);
   const [, setStep] = useAtom(stepStore);
+
   const [personalData] = useAtom(personalDataStore);
   const [billing] = useAtom(selectedBillingIntervalStore);
   const [plan] = useAtom(selectedPlanStore);

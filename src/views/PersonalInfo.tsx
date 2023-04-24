@@ -1,11 +1,11 @@
-import { useForm } from 'react-hook-form';
-import { useAtom } from 'jotai';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useAtom } from 'jotai';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { personalDataStore, stepStore } from '../store/store';
 import Header from '../components/section/Header';
 import NavButtons from '../components/section/NavButtons';
 import TextInput from '../components/forms/inputs/TextInput';
-import { personalDataStore, stepStore } from '../store/store';
 
 type FormValues = {
   name: string;
@@ -13,7 +13,6 @@ type FormValues = {
   phone: string;
 };
 
-// Todo: regex for email & phone
 const schema = yup.object({
   name: yup.string().required('Name is required'),
   email: yup

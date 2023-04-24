@@ -1,6 +1,6 @@
-import { useAtom } from 'jotai/index';
-import { selectedBillingIntervalStore } from '../store/store';
+import { useAtom } from 'jotai';
 import { Billing } from '../api/types';
+import { selectedBillingIntervalStore } from '../store/store';
 
 export const useMonthlyBilling = () => {
   const [selectedBillingInterval, setSelectedBillingInterval] = useAtom(selectedBillingIntervalStore);
