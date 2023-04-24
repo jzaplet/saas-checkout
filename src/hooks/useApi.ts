@@ -1,17 +1,17 @@
-/**
- * Copyright (c) 2023 Strategio Digital s.r.o.
- * @author Jiří Zapletal (https://strategio.dev, jz@strategio.dev)
- */
-import { Query } from '../api/types';
+import { Mutation, Query } from '../api/types';
 import { gql, request as graphqlRequest } from 'graphql-request';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 
 export const useApi = () => {
-  async function request(query: string): Promise<Query> {
-    return await graphqlRequest<Query>('/graphql', query);
+  async function queryRequest(query: string, variables = {}): Promise<Query> {
+    return await graphqlRequest<Query>('/graphql', query, variables);
   }
 
-  const plansQueryDocument = gql`
+  async function mutationRequest(mutation: string, variables: {}): Promise<Mutation> {
+    return await graphqlRequest<Mutation>('/graphql', mutation, variables);
+  }
+
+  const plansQuery = gql`
     query plans {
       plans {
         id
@@ -22,7 +22,7 @@ export const useApi = () => {
     }
   `;
 
-  const addonsQueryDocument = gql`
+  const addonsQuery = gql`
     query addons {
       addons {
         id
@@ -34,16 +34,35 @@ export const useApi = () => {
     }
   `;
 
-  async function storeSubscription(): Promise<void> {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-  }
+  const subscribeMutation = gql`
+    mutation subscribe(
+      $userName: userName
+      $userEmail: userEmail
+      $userPhone: userPhone
+      $planId: planId
+      $addonIds: addonIds
+    ) {
+      subscription(
+        userName: $userName
+        userEmail: $userEmail
+        userPhone: $userPhone
+        planId: $planId
+        addonIds: $addonIds
+      ) {
+        id
+        status
+      }
+    }
+  `;
 
   return {
+    queryRequest,
+    mutationRequest,
     useQuery,
-    request,
-    plansQueryDocument,
-    addonsQueryDocument,
+    useMutation,
 
-    storeSubscription,
+    plansQuery,
+    addonsQuery,
+    subscribeMutation,
   };
 };

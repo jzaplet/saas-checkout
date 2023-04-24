@@ -2,25 +2,56 @@ import { FormEvent, useState } from 'react';
 import { useAtom } from 'jotai';
 import { useApi } from '../hooks/useApi';
 import { useMonthlyBilling } from '../hooks/useMonthlyBilling';
-import { selectedAddonsStore, selectedPlanStore, stepStore } from '../store/store';
+import { Mutation, MutationSubscribeArgs } from '../api/types';
 import Header from '../components/section/Header';
 import NavButtons from '../components/section/NavButtons';
 
+import {
+  personalDataStore,
+  selectedAddonsStore,
+  selectedPlanStore,
+  selectedBillingIntervalStore,
+  stepStore,
+} from '../store/store';
+
 function FinishingUp(): JSX.Element {
-  const { storeSubscription } = useApi();
+  const { useMutation, subscribeMutation, mutationRequest } = useApi();
+
   const { isMonthlyBilling } = useMonthlyBilling();
   const [loading, setLoading] = useState(false);
 
   const [, setStep] = useAtom(stepStore);
+  const [personalData] = useAtom(personalDataStore);
+  const [billing] = useAtom(selectedBillingIntervalStore);
   const [plan] = useAtom(selectedPlanStore);
   const [addons] = useAtom(selectedAddonsStore);
+
+  const variables = (): MutationSubscribeArgs => {
+    return {
+      userName: personalData.name,
+      userEmail: personalData.email,
+      userPhone: personalData.phone,
+      planId: plan?.id || '',
+      addonIds: addons.map((addon) => addon.id),
+      billing,
+    };
+  };
+
+  const { mutateAsync } = useMutation<Mutation['subscribe']>({
+    mutationKey: ['subscribe'],
+    mutationFn: async () => {
+      const { subscribe } = await mutationRequest(subscribeMutation, variables());
+      return subscribe;
+    },
+  });
 
   async function onSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
     setLoading(true);
 
     try {
-      await storeSubscription();
+      const subscription = await mutateAsync();
+      console.log('DONE: Subscription response: ', subscription);
       setStep(5);
     } catch (e) {
       console.error(e);

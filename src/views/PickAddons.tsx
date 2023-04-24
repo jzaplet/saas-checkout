@@ -1,14 +1,14 @@
 import { useAtom } from 'jotai';
 import { useApi } from '../hooks/useApi';
 import { Addon } from '../api/types';
-import { addonsStore, selectedAddonsStore, stepStore } from '../store/store';
 import Header from '../components/section/Header';
 import NavButtons from '../components/section/NavButtons';
 import Spinner from '../components/icons/Spinner';
 import AddonSelect from '../components/forms/AddonSelect';
+import { addonsStore, selectedAddonsStore, stepStore } from '../store/store';
 
 function PickAddons(): JSX.Element {
-  const { request, addonsQueryDocument, useQuery } = useApi();
+  const { queryRequest, addonsQuery, useQuery } = useApi();
 
   const [, setStep] = useAtom(stepStore);
   const [addons, setAddons] = useAtom(addonsStore);
@@ -29,7 +29,7 @@ function PickAddons(): JSX.Element {
   useQuery({
     queryKey: ['addons'],
     queryFn: async () => {
-      const { addons } = await request(addonsQueryDocument);
+      const { addons } = await queryRequest(addonsQuery);
       setAddons(addons);
       return addons;
     },

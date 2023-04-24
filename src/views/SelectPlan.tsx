@@ -9,7 +9,7 @@ import PlanSelect from '../components/forms/PlanSelect';
 import BillingIntervalToggle from '../components/forms/BillingIntervalToggle';
 
 function SelectPlan(): JSX.Element {
-  const { request, plansQueryDocument, useQuery } = useApi();
+  const { queryRequest, plansQuery, useQuery } = useApi();
   const [, setStep] = useAtom(stepStore);
   const [plans, setPlans] = useAtom(plansStore);
   const [selectedPlan, setSelectedPlan] = useAtom(selectedPlanStore);
@@ -17,7 +17,7 @@ function SelectPlan(): JSX.Element {
   useQuery({
     queryKey: ['plans'],
     queryFn: async () => {
-      const { plans } = await request(plansQueryDocument);
+      const { plans } = await queryRequest(plansQuery);
       setPlans(plans);
       return plans;
     },
