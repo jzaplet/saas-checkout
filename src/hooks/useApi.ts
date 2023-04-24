@@ -2,67 +2,63 @@ import { Mutation, Query } from '../api/types';
 import { gql, request as graphqlRequest } from 'graphql-request';
 import { useQuery, useMutation } from '@tanstack/react-query';
 
-export const useApi = () => {
-  async function queryRequest(query: string, variables = {}): Promise<Query> {
-    return await graphqlRequest<Query>('/graphql', query, variables);
-  }
+const endPoint = '/graphql';
 
-  async function mutationRequest(mutation: string, variables: {}): Promise<Mutation> {
-    return await graphqlRequest<Mutation>('/graphql', mutation, variables);
-  }
+export async function queryRequest(query: string, variables = {}): Promise<Query> {
+  return await graphqlRequest<Query>(endPoint, query, variables);
+}
 
-  const plansQuery = gql`
-    query plans {
-      plans {
-        id
-        name
-        monthlyFee
-        yearlyFee
-      }
+export async function mutationRequest(mutation: string, variables: {}): Promise<Mutation> {
+  return await graphqlRequest<Mutation>(endPoint, mutation, variables);
+}
+
+export const plansQuery = gql`
+  query plans {
+    plans {
+      id
+      name
+      monthlyFee
+      yearlyFee
     }
-  `;
+  }
+`;
 
-  const addonsQuery = gql`
-    query addons {
-      addons {
-        id
-        name
-        description
-        monthlyFee
-        yearlyFee
-      }
+export const addonsQuery = gql`
+  query addons {
+    addons {
+      id
+      name
+      description
+      monthlyFee
+      yearlyFee
     }
-  `;
+  }
+`;
 
-  const subscribeMutation = gql`
-    mutation subscribe(
-      $userName: userName
-      $userEmail: userEmail
-      $userPhone: userPhone
-      $planId: planId
-      $addonIds: addonIds
+export const subscribeMutation = gql`
+  mutation subscribe(
+    $userName: userName
+    $userEmail: userEmail
+    $userPhone: userPhone
+    $planId: planId
+    $addonIds: addonIds
+  ) {
+    subscription(
+      userName: $userName
+      userEmail: $userEmail
+      userPhone: $userPhone
+      planId: $planId
+      addonIds: $addonIds
     ) {
-      subscription(
-        userName: $userName
-        userEmail: $userEmail
-        userPhone: $userPhone
-        planId: $planId
-        addonIds: $addonIds
-      ) {
-        id
-        status
-      }
+      id
+      status
     }
-  `;
+  }
+`;
 
+export const useApi = () => {
   return {
-    queryRequest,
-    mutationRequest,
     useQuery,
     useMutation,
-
-    plansQuery,
-    addonsQuery,
-    subscribeMutation,
   };
 };
