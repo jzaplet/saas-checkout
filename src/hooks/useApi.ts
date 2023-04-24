@@ -6,15 +6,7 @@ import { Addon, Plan } from '../api/types';
 
 export const useApi = () => {
   async function fetchPlans(): Promise<Plan[]> {
-    // TODO: Implement GraphQL query...
-
-    // Simulate a delay
     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // const resp = await fetch('http://localhost:5173/graphql/plans', { method: 'GET' });
-    // return await resp.json();
-    // //const { data } = useQuery({ queryKey: ['groups'], queryFn: fetchGroups })
-
     return [
       { __typename: 'Plan', id: 'plan-1', name: 'Arcade', monthlyFee: 9, yearlyFee: 90 },
       { __typename: 'Plan', id: 'plan-2', name: 'Advanced', monthlyFee: 12, yearlyFee: 120 },
@@ -23,9 +15,6 @@ export const useApi = () => {
   }
 
   async function fetchAddons(): Promise<Addon[]> {
-    // TODO: Implement GraphQL query...
-
-    // Simulate a delay
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     return [
@@ -58,7 +47,6 @@ export const useApi = () => {
 
   async function storeSubscription(): Promise<void> {
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    // TODO: implement GraphQL mutation
   }
 
   return {

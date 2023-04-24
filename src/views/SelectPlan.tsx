@@ -8,12 +8,33 @@ import Spinner from '../components/icons/Spinner';
 import PlanSelect from '../components/forms/PlanSelect';
 import BillingIntervalToggle from '../components/forms/BillingIntervalToggle';
 
+import { useQuery } from '@tanstack/react-query';
+import { gql, request } from 'graphql-request';
+import { Query } from '../api/types';
+
 function SelectPlan(): JSX.Element {
   const { fetchPlans } = useApi();
 
   const [, setStep] = useAtom(stepStore);
   const [plans, setPlans] = useAtom(plansStore);
   const [selectedPlan, setSelectedPlan] = useAtom(selectedPlanStore);
+
+  const plansQueryDocument = gql`
+    query plans {
+      plans {
+        id
+        name
+        monthlyFee
+        yearlyFee
+      }
+    }
+  `;
+
+  const { data } = useQuery<Query['plans']>(['plans'], async () => {
+    const resp = await request<Query>('/graphql', plansQueryDocument);
+    console.log(resp.plans);
+    return resp.plans;
+  });
 
   async function load(): Promise<void> {
     const data = await fetchPlans();
