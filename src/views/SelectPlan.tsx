@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { useApi } from '../hooks/useApi';
 import { plansStore, selectedPlanStore, stepStore } from '../store/store';
 import Header from '../components/section/Header';
 import NavButtons from '../components/section/NavButtons';
@@ -13,8 +11,6 @@ import { gql, request } from 'graphql-request';
 import { Query } from '../api/types';
 
 function SelectPlan(): JSX.Element {
-  const { fetchPlans } = useApi();
-
   const [, setStep] = useAtom(stepStore);
   const [plans, setPlans] = useAtom(plansStore);
   const [selectedPlan, setSelectedPlan] = useAtom(selectedPlanStore);
@@ -30,20 +26,14 @@ function SelectPlan(): JSX.Element {
     }
   `;
 
-  const { data } = useQuery<Query['plans']>(['plans'], async () => {
-    const resp = await request<Query>('/graphql', plansQueryDocument);
-    console.log(resp.plans);
-    return resp.plans;
+  useQuery({
+    queryKey: ['plans'],
+    queryFn: async () => {
+      const { plans } = await request<Query>('/graphql', plansQueryDocument);
+      setPlans(plans);
+      return plans;
+    },
   });
-
-  async function load(): Promise<void> {
-    const data = await fetchPlans();
-    setPlans(data);
-  }
-
-  useEffect(() => {
-    load();
-  }, [plans]);
 
   return (
     <form onSubmit={() => setStep(3)} className="grid grid-cols-1 place-content-between h-full">
