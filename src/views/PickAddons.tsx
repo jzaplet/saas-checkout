@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { useApi } from '../hooks/useApi';
 import { Addon } from '../api/types';
@@ -9,7 +8,7 @@ import Spinner from '../components/icons/Spinner';
 import AddonSelect from '../components/forms/AddonSelect';
 
 function PickAddons(): JSX.Element {
-  const { fetchAddons } = useApi();
+  const { request, addonsQueryDocument, useQuery } = useApi();
 
   const [, setStep] = useAtom(stepStore);
   const [addons, setAddons] = useAtom(addonsStore);
@@ -27,14 +26,14 @@ function PickAddons(): JSX.Element {
     }
   }
 
-  async function load(): Promise<void> {
-    const data = await fetchAddons();
-    setAddons(data);
-  }
-
-  useEffect(() => {
-    load();
-  }, [addons]);
+  useQuery({
+    queryKey: ['addons'],
+    queryFn: async () => {
+      const { addons } = await request(addonsQueryDocument);
+      setAddons(addons);
+      return addons;
+    },
+  });
 
   return (
     <form onSubmit={() => setStep(4)} className="grid grid-cols-1 place-content-between h-full">
